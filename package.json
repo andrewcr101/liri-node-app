@@ -19,6 +19,10 @@
   "homepage": "https://github.com/andrewcr101/liri-node-app#readme",
   "dependencies": {
     "bandsintown-events": "^1.0.4",
+    "console.table": "^0.10.0",
+    "dotenv": "^6.0.0",
+    "key": "^0.1.11",
+    "node-spotify-api": "^1.0.7",
     "request": "^2.88.0",
     "xhr2": "^0.1.4"
   }
