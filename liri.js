@@ -4,6 +4,7 @@ var keys = require('./key.js');
 var Spotify = require('node-spotify-api');
 //var spotify = new Spotify(keys.spotify);
 var request = require("request");
+var moment = require("moment");
 
 
 
@@ -49,17 +50,37 @@ moviesearch = function() {
       console.log("IMDB Ratings: " + JSON.parse(body).imdbRating);
 
   //Had to add this part in to account for the movies that don't have Rotten Tomato score i.e. Friday
-      if (JSON.parse(body).Ratings[1].Source === "Rotten Tomatoes") {
-        console.log("Rotten Tomatoes Ratings: " + JSON.parse(body).Ratings[1].Value);
-      } else
-      console.log("No Rotten Tomatoe Score to Give");
+
+  /*for (var i = 0; JSON.parse(body).Ratings.length; i++)
+      if (JSON.parse(body).Ratings[i].Source === "Rotten Tomatoes") {
+        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[i].Value);
+        if (JSON.parse(body).Ratings[i].Website !== undefined) {
+          console.log("Rotten Tomatoes URL: " + JSON.parse(body).Ratings[i].Website);
+        }
+      }*/
+  //This way works best for tv movies like New Editon that doesn't have a Rotten Tomatoe score.    
+      for (var i = 0; i < JSON.parse(body).Ratings.length; i++) {
+      if (JSON.parse(body).Ratings[i].Source === "Rotten Tomatoes") {
+        console.log("Rotten Tomatoes Ratings: " + JSON.parse(body).Ratings[i].Value);
+      } 
+    } 
 
   //continuing on with the code    
       console.log("Country: " + JSON.parse(body).Country);
       console.log("Language: " + JSON.parse(body).Language);
       console.log("Actors: " + JSON.parse(body).Actors);
       console.log("Plot: " + JSON.parse(body).Plot);
-     log(moviequery);
+      log("Title: " + JSON.parse(body).Title + "\r\n" +
+          "Release Year: " + JSON.parse(body).Year + "\r\n" +
+          "IMDB Rating: " + JSON.parse(body).imdbRating + "\r\n" + 
+          //"Rotten Tomatoes Ratings: " + JSON.parse(body).Ratings[i].Value + "\r\n" +
+          "Country: " + JSON.parse(body).Country + "\r\n" +
+          "Language: " + JSON.parse(body).Language + "\r\n" +
+          "Actors: " + JSON.parse(body).Actors + "\r\n" +
+          "Plot: " + JSON.parse(body).Plot + "\r\n" +
+         "---------------------------------------------------------------------------------" + "\r\n");
+        
+
     }
 
   });
@@ -73,11 +94,13 @@ concertsearch = function() {
     var result  =  JSON.parse(body)[0];
     console.log("Venue name " + result.venue.name);
     console.log("Venue location " + result.venue.city);
-    //console.log("Date of Event " +  moment(result.datetime).format("MM/DD/YYYY"));
-  log("Searching for " + term);  
-  log("Vanue name " + result.venue.name);
-  log("Venue location " + result.venue.city);
-  log(result);
+    console.log("Date of Event " +  moment(result.datetime).format("MM/DD/YYYY"));
+  log("Searching for " + term + "\r\n" +  
+      "Vanue name " + result.venue.name + "\r\n" +
+      "Venue location " + result.venue.city + "\r\n" +
+      "Date of Event " +  moment(result.datetime).format("MM/DD/YYYY") + "\r\n"  +
+      "------------------------------------------------------------------------" + "\r\n");
+  //log(result);
   });
 }
 
